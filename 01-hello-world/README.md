@@ -118,8 +118,175 @@ Exercises:
 
 ## File permissions
 
+When you listed files using `ls -l`, the first showed the permissions of each file and directory. e.g. :
+
+```
+-rw-r--r--  1 cbirchall  staff  12288 Sep 25 18:23 .README.md.swp
+```
+
+Let's look at that permissions string in detail:
+
+```
+-rw-r--r--
+```
+
+The first character (`-`) is not very interesting. It just shows whether the file is a normal file (`-`) or a directory (`d`).
+
+The remaining 9 characters should be read in groups of 3: `rw-`, `r--`, `r--`. They show the file's permissions for 
+
+1. the file owner
+2. members of the file's owner group
+3. everybody else
+
+respectively.
+
+In each group of 3 characters, the characters represent, in order, permissions to Read, Write and eXecute. The meanings of these are different depending on whether you are talking about a normal file or a directory.
+
+### Permissions on normal files
+
+* `r` (or `-`) means a user can (or cannot) read or copy the file
+* `w` means the user can write to the file
+* `x` means the user can execute the file. This is relevant for e.g. Bash scripts.
+
+### Permissions on directories
+
+* `r` (or `-`) means a user can list the files in the directory
+* `w` means the user can delete files from the directory or move files into it
+* `x` means the user can read files inside the directory, as long as they have read permissions on those files
+
+### Reading a line of `ls -l` output
+
+Using the same example as before,
+
+```
+-rw-r--r--  1 cbirchall  staff  12288 Sep 25 18:23 .README.md.swp
+```
+
+We can see the following:
+
+* It's a normal file (the first character of the permissions string is `-`)
+* User `cbirchall` is the owner of the file and can read and write it but not execute it
+* The file's owner group is `staff`. Members of this group can read the file but not write or execute it
+* Everybody else can read the file but not write or execute it
+
+Exercise: Run `ls -l` and check that you understand the output
+
+## Changing a file's owner or owner group
+
+You can use `chown` ("CHange OWNer") command to change the owner of a file. You need to be a super-user to do this:
+
+```
+$ sudo chown nobody hello.txt
+```
+
+You can use `chgrp` ("CHange GRouP") to change the owner group:
+
+```
+$ sudo chown wheel hello.txt
+```
+
+Or you can use `chown` to change both at the same time:
+
+```
+$ sudo chown nobody:wheel hello.txt
+```
+
+Exercise: Change the owner of the `README.md` file to the `nobody` user.
+
 ## Creating and deleting files and directories
+
+Let's create a directory. You can do this with the `mkdir` ("MaKe DIRectory") command.
+
+```
+$ pwd
+/Users/cbirchall/code/cli-tools-skills-amnesty/01-hello-world
+
+$ mkdir hello
+
+$ ls -l
+total 16
+-rw-rw-rw-  1 cbirchall  staff  3410 Sep 25 18:33 README.md
+drwxrwxrwx  2 cbirchall  staff    68 Oct 14 11:31 hello
+-rw-rw-rw-  1 cbirchall  staff     7 Sep 25 17:59 hello.txt
+```
+
+Now let's try to make a deeply nested directory: `how/are/you`:
+
+```
+$ mkdir how/are/you
+mkdir: how/are: No such file or directory
+```
+
+Oops, that didn't work. You can't make a directory unless its parent directory already exists. But we can tell `mkdir` to create any directories it needs along the way, using the `-p` (p for "parent") flag:
+
+```
+$ mkdir -p how/are/you
+```
+
+We can create files in a few different ways. If you want to create a completely empty file, you can use the `touch` command:
+
+```
+$ touch how/are/you/fine-thanks.txt
+```
+
+Or if you want to write some text to a file, you can do so with `echo`:
+
+```
+$ echo "It's a lovely day" > how/are/you/not-bad.txt
+```
+
+We'll discuss that little arrow in more detail below.
+
+### Deleting files and directories
+
+You can delete a file using the `rm` ("ReMove") command:
+
+```
+$ rm how/are/you/not-bad.txt
+```
+
+To delete a directory, you need to pass the `-r` ("recursive") flag, telling the command to delete everything inside the directory and then delete the directory itself:
+
+```
+$ rm -r how/are/you
+```
+
+Exercise: Delete the `how` and `hello` directories that you created.
 
 ## Finding files
 
+You can use the `find` command to find files that match certain conditions.
+
+```
+# Find all files in the current directory
+$ find .
+
+# Find all files in the "hello" directory
+$ find hello
+
+# Find all files in current dir starting with "h"
+$ find . -name "h*"
+
+# Find all directories in current dir
+$ find . -type d
+
+# Find all files in current dir created in the last hour and a half
+$ find . -ctime -1h30m
+
+# Find all files in current dir created in the last hour and a half that are larger than 1 GB
+$ find . -ctime -1h30m -size +1G
+```
+
+You can also tell `find` to execute some command for every file that matches, e.g.
+
+```
+$ find . -name "h*" -exec echo "Found a file called {}" \;
+Found a file called ./hello
+Found a file called ./hello.txt
+```
+
+Exercise: Find all files ending with ".md" in this directory and copy them (using the `cp` command) to a new file with `.foo` appended to the name. e.g. `README.md` should be copied to a new file `README.md.foo`.
+
 ## Piping and redirection
+
+TODO
