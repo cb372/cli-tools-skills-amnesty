@@ -289,4 +289,56 @@ Exercise: Find all files ending with ".md" in this directory and copy them (usin
 
 ## Piping and redirection
 
-TODO
+UNIX processes communicate with the world using streams. There are 3 standard streams: `stdin` (standard input), `stdout` (standard output) and `stderr` (standard error).
+
+You can use the pipe (`|`) operator to chain two processes together. This simply links the `stdout` of the first process to the `stdin` of the second. e.g.:
+
+```
+$ echo "hello world"
+hello world
+
+$ echo "hello world" | wc -w
+       2
+```
+
+The `echo` command prints "hello world" to its `stdout` stream. Using a pipe, we use that as the `stdin` for the `wc` ("Word Count") command. The `wc` command prints out the number of words in its input.
+
+You can use `|` to chain together as many processes as you like, and it's common to build quite long chains, e.g.:
+
+```
+$ fgrep "ERROR" application.log | grep -oP 'ID = \K\w+' | sort | uniq 
+```
+
+(By the end of the next lesson, you should be able to work out what this command does!)
+
+### Redirection
+
+By default, the content of both `stdout` and `stderr` are printed to the console. But sometimes you don't want this. You might want to save it to a file instead, or maybe just discard it completely if it is very noisy. You can do this using redirection.
+
+In the following examples, we reference the standard streams by number: 1 = `stdout`, 2 = `stderr`.
+
+```
+$ my-command >output.txt  # Saves stdout to a file called output.txt. stderr will still be printed to the console.
+
+$ my-command >/dev/null  # Sends stdout to a black hole, never to be seen again. stderr will still be printed to the console.
+
+$ my-command 2>/dev/null  # Sends stderr to a black hole, never to be seen again. stdout will still be printed to the console.
+
+$ my-command >output.txt 2>&1 # Redirects stderr to stdout, and saves them both to a file.
+
+$ first-command 2>/dev/null | second-command # Discards stderr, and sends stdout to the second command
+
+$ first-command 2>&1 | second-command # Redirects stderr to stdout, and sends them both to the second command
+```
+
+If you want to both view a command's output on the console and save it to a file for later reference, you can pipe it to the `tee` command:
+
+```
+$ my-command | tee output.log
+```
+
+This is often useful if you have a long-running command and you want to watch its progress in real-time.
+
+## To be continued...
+
+In the [next lesson](02-text-processing/README.md), we'll be looking at how to use standard UNIX command line tools to inspect and manipulate text files.
