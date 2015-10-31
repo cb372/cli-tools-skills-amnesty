@@ -10,7 +10,7 @@
 
 ## 2. Text processing
 
-* echo, cat, more, less, head, tail, column
+* echo, cat, more, less, head, tail
 * [e|f][z]grep, sed, awk
 * sort, uniq
 
