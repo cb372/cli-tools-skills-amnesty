@@ -28,6 +28,7 @@
 * curl
 * wget
 * jq
+* Bonus: tmux
 
 ## 5. vi
 
