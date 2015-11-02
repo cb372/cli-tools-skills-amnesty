@@ -68,10 +68,6 @@ To exit the program, press `q`.
 
 Exercise: Run `less README.md` and familiarise yourself with the keys for navigation and searching. Try searching for "hello".
 
-### more
-
-Don't use `more`. It's an older, worse version of `less`.
-
 ### head and tail
 
 You can look at the first few or last few lines of a file using `head` or `tail`.
