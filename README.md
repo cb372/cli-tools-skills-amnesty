@@ -5,7 +5,6 @@
 * pwd, cd, ls, mkdir, rm, touch
 * file permissions
 * find
-* xargs
 * pipes, redirection
 
 ## 2. Text processing
