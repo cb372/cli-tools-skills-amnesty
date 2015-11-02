@@ -62,6 +62,7 @@ Searching:
 * `/` lets you search for a string. It searches forward from the current position in the file. e.g. `/hello<enter>`
 * `?` searches backwards from the current position in the file. e.g. `?hello<enter>`
 * `n` jumps to the next match
+* `Shift-n` jumps to the previous match
 
 To exit the program, press `q`.
 
