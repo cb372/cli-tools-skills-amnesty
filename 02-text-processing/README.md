@@ -62,14 +62,11 @@ Searching:
 * `/` lets you search for a string. It searches forward from the current position in the file. e.g. `/hello<enter>`
 * `?` searches backwards from the current position in the file. e.g. `?hello<enter>`
 * `n` jumps to the next match
+* `Shift-n` jumps to the previous match
 
 To exit the program, press `q`.
 
 Exercise: Run `less README.md` and familiarise yourself with the keys for navigation and searching. Try searching for "hello".
-
-### more
-
-Don't use `more`. It's an older, worse version of `less`.
 
 ### head and tail
 
