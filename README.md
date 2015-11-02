@@ -35,4 +35,5 @@
 * movement (jkl; b, w, ^, $, Ctrl-B, Ctrl-F)
 * searching (/, ?, n, p, *), replacement
 * i, a, d, c
+* yanking and pasting
 * saving, quitting
