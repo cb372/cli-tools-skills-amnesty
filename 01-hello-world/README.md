@@ -193,6 +193,14 @@ $ sudo chown nobody:wheel hello.txt
 
 Exercise: Change the owner of the `README.md` file to the `nobody` user.
 
+You can use the `chmod` command to change a file's permissions:
+
+```
+$ chmod u+x hello.txt  # Allow the file's owner to execute the file
+
+$ chmod g-w hello.txt  # Do not allow users in the file's owner group to write to the file
+```
+
 ## Creating and deleting files and directories
 
 Let's create a directory. You can do this with the `mkdir` ("MaKe DIRectory") command.
@@ -341,4 +349,4 @@ This is often useful if you have a long-running command and you want to watch it
 
 ## To be continued...
 
-In the [next lesson](02-text-processing/README.md), we'll be looking at how to use standard UNIX command line tools to inspect and manipulate text files.
+In the [next lesson](../02-text-processing/README.md), we'll be looking at how to use standard UNIX command line tools to inspect and manipulate text files.
