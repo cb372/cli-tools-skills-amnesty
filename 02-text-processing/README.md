@@ -82,6 +82,16 @@ $ head my-long-file.txt  # Prints the first 10 lines of the file
 $ head -n 50 my-long-file.txt  # Prints the first 50 lines
 
 $ my-noisy-command | head  # Prints the first 10 lines of the command's stdout
+
+$ my-noisy-command | tail  # Prints the last 10 lines of the command's stdout
+```
+
+### tail -f
+
+You can use `tail -f` (f for "follow") to print out a file or stream that is still being written to. As soon as a new line is added to the file, it will be printed to the screen.
+
+```
+$ tail -f web-server-requests.log  # Print out the requests to your web server as they happen
 ```
 
 ## grep
@@ -144,9 +154,54 @@ Exercises:
 
 ## sed
 
-TODO
+`sed` is a very versatile tool, but its most common usage is to find and replace strings in a text file or stream. You define the replacement you want to make with an expression of the form:
 
-TODO Exercise: updating the Cassandra host in kong.yml
+```
+s/pattern/replacement/
+```
+
+For example,
+
+```
+$ echo hello world | sed s/world/moon/
+hello moon
+```
+
+In this simple example we searched for the literal string "world" and replaced it with the literal string "moon". Not very exciting. But the real power of `sed` is in the use of regular expressions.
+
+```
+$ echo The date is 11-07-2015 | sed -E 's/([0-9]{2})-([0-9]{2})-([0-9]{4})/\2-\1-\3/'
+The date is 07-11-2015
+```
+
+Here we have used a regular expression to match the pattern "2 digits, dash, 2 digits, dash, 4 digits" and capture each group of digits, then referenced those captured groups in our replacement string.
+
+Note: By default `sed` will only replace the first match it finds on each line. To replace all matches, add a `g` (for "global") to your expression: `s/world/moon/g`.
+
+### Working with files
+
+You can use sed by piping other commands to it, as shown above, or by giving it the name of a file to use as input:
+
+```
+$ echo hello world > input.txt
+
+$ sed s/world/moon/ input.txt
+hello moon
+```
+
+You can tell `sed` to update the input file in-place, overwriting the contents of the file:
+
+```
+$ sed -i ".orig" s/world/moon/ input.txt  # Update input.txt in-place, saving the original file contents as input.txt.orig
+
+$ sed -i "" s/world/moon/ input.txt  # Update input.txt in-place, with no backup file
+```
+
+Exercises (based on something I actually needed to do the other day):
+
+1. Use sed to replace the string "localhost:9042" with "1.2.3.4:9042" in the file `data/kong.yml`. (Don't update the file in-place.)
+
+2. Now use sed with a regular expression to replace the pattern "localhost:<port number>" with "1.2.3.4:<port number>".
 
 ## awk
 
