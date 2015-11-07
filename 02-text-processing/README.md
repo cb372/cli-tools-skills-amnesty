@@ -16,7 +16,7 @@ There are a few simple ways to write text to a file.
 
 * `cat`
 
-    You can write multiple lines to a file, you can use `cat`. Just write the file's contents on `stdin`. Press `Ctrl-D` when you are done.
+    You can write multiple lines to a file using `cat`. Just write the file's contents on `stdin`. Press `Ctrl-D` when you are done.
 
     ```
     $ cat > hello.txt hello.txt
@@ -91,7 +91,7 @@ $ my-noisy-command | tail  # Prints the last 10 lines of the command's stdout
 You can use `tail -f` (f for "follow") to print out a file or stream that is still being written to. As soon as a new line is added to the file, it will be printed to the screen.
 
 ```
-$ tail -f web-server-requests.log  # Print out the requests to your web server as they happen
+$ tail -f web-server-requests.log  # Print out the requests arriving at your web server as they happen
 ```
 
 ## grep
@@ -156,13 +156,13 @@ $ tail -f my-application.log | grep ERROR  # Follow the log in real-time but onl
 ### Exercises
 
 1. Use grep to find all lines containing the phrase "Elements generation" in the file `data/concierge.log`.
-2. Now find all lines containing that phrase in both `concierge.log` and `concierge.log.2015-10-30`.
+2. Now find all lines containing that phrase in both `concierge.log` and `concierge.log.2015-10-30.gz`.
 3. Out of all of those matching lines, find the ones that contain the phrase "wildly wrong". Hint: you may want to chain multiple grep command together using `|`.
 4. For each of those matching lines, print out only the "ID = [...]" part. Hint: You will need to use a regex for this one.
 
 ## sed
 
-`sed` is a very versatile tool, but its most common usage is to find and replace strings in a text file or stream. You define the replacement you want to make with an expression of the form:
+`sed` is also a very versatile tool, but its most common usage is to find and replace strings in a text file or stream. You define the replacement you want to make with an expression of the form:
 
 ```
 s/pattern/replacement/
@@ -209,7 +209,7 @@ Exercises (based on something I actually needed to do the other day):
 
 1. Use sed to replace the string "localhost:9042" with "1.2.3.4:9042" in the file `data/kong.yml`. (Don't update the file in-place.)
 
-2. Now use sed with a regular expression to replace the pattern "localhost:<port number>" with "1.2.3.4:<port number>".
+2. Now use sed with a regular expression to replace the pattern `localhost:<port number>` with `1.2.3.4:<port number>`.
 
 ## awk
 
