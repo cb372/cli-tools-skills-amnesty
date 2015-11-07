@@ -145,7 +145,15 @@ You can also pipe input into it from another command, if you want to filter out 
 * `-o` prints out only the part of the line that matched
 * `-v` prints out all lines that DO NOT match the search expression
 
-Exercises: 
+### grep and tail -f
+
+`grep` is often combined with `tail -f` to follow an application's log in real-time whilst filtering out anything you don't care about:
+
+```
+$ tail -f my-application.log | grep ERROR  # Follow the log in real-time but only show lines that contain the word "ERROR"
+```
+
+### Exercises
 
 1. Use grep to find all lines containing the phrase "Elements generation" in the file `data/concierge.log`.
 2. Now find all lines containing that phrase in both `concierge.log` and `concierge.log.2015-10-30`.
@@ -205,13 +213,127 @@ Exercises (based on something I actually needed to do the other day):
 
 ## awk
 
-TODO
+`awk` is more like a mini programming language than just a command. You use it by passing it a program made up of one or more commands of the form `pattern { action }`:
 
-TODO Exercises: print URLs in spray.log, calculate average time taken by an Allocation Failure in gc.log.
+```
+$ awk '{ print $1 }' input.txt  # Print out the first column of every line in input.txt
+
+$ awk '/hello/ { print $0 }' input.txt  # Print out any line that contains the word "hello"
+
+$ awk '$9 == "200" { print "OK: " $7 }' spray.log  # Print "OK: <url>" for all 200 responses in the web server log
+
+$ awk '$9 == "200" { print "OK: " $7 } \
+       $9 == "404" { print "Not found: " $7 }' spray.log  # Print "OK: <url>" for all 200 responses, "Not found: <url>" for all 404s
+
+$ awk '$9 == "200" { ok++ } \
+       $9 == "404" { notfound++ } \
+       END         { print "OK: " ok ", Not found: " notfound }' spray.log
+OK: 500, Not found: 2
+```
+
+### Exercises (hard!)
+
+1. Use awk to print the number of times each URL was requested in spray.log. The output should look something like this. Hint: you will need to use [String functions](https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html#String-Functions) and associative arrays.
+
+    ```
+    /uk 1
+    /favicon.ico 1
+    /politics/2015/oct/21/asd 2
+    /manager/html 1
+    /editions 340
+    /search 1
+    /childrens-books-site/gallery/2014/oct/19/best-culturally-diverse-picture-books-for-toddlers-and-infants 2
+    / 154
+    ```
+
+2. Print the average of the GC time (column 12) of lines containing "Allocation Failure" in the `gc.log` file. The answer should be `0.0051873`.
 
 ## sort and uniq
 
-TODO
+The `sort` command, as the name suggests, sorts its input.
+
+```
+$ cat fruits.txt
+banana
+apple
+cherry
+
+$ sort fruits.txt
+apple
+banana
+cherry
+```
+
+By default it sorts lexicographically, but if you have a list of numbers then you can use the `-n` flag to sort them numerically:
+
+```
+$ cat numbers.txt
+15
+103
+3
+2
+
+$ sort numbers.txt  # sort lexicographically
+103
+15
+2
+3
+
+$ sort -n numbers.txt  # sort numerically
+2
+3
+15
+103
+
+$ sort -n -r numbers.txt  # reverse the sort order
+103
+15
+3
+2
+```
+
+You can also sort by a certain column:
+
+```
+$ cat orders.csv
+Widgets,150
+Sprockets,123
+Thingies,456
+
+$ sort -k 2 -t "," -n orders.csv  # sort numerically by the second column
+Sprockets,123
+Widgets,150
+Thingies,456
+```
+
+### uniq
+
+The `uniq` command finds all the distinct lines in a file. It depends on the input being sorted, so it is usually used in conjunction with the `sort` command:
+
+```
+$ cat stuff.txt
+foo
+bar
+baz
+foo
+foo
+baz
+bar
+foo
+baz
+wow
+yeah
+bar
+foo
+baz
+
+$ sort stuff.txt | uniq
+bar
+baz
+foo
+wow
+yeah
+```
 
 ## Other useful text processing commands
 
