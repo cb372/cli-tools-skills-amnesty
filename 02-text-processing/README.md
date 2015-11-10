@@ -19,7 +19,7 @@ There are a few simple ways to write text to a file.
     You can write multiple lines to a file using `cat`. Just write the file's contents on `stdin`. Press `Ctrl-D` when you are done.
 
     ```
-    $ cat > hello.txt hello.txt
+    $ cat > hello.txt
     Hello
     This is a file
     with a few
