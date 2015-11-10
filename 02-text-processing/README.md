@@ -144,6 +144,7 @@ You can also pipe input into it from another command, if you want to filter out 
 * `--color` highlights the part of the line that matched
 * `-o` prints out only the part of the line that matched
 * `-v` prints out all lines that DO NOT match the search expression
+* `-i` (i for "ignore case") prints out all lines that match, ignoring case distinctions
 
 ### grep and tail -f
 
