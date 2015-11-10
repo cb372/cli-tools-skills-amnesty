@@ -96,7 +96,7 @@ $ tail -f web-server-requests.log  # Print out the requests arriving at your web
 
 ## grep
 
-`grep` is a very versatile tool for searching for text in one or more files. You can search for simple strings, or use regular expressions for more powerful searching. It's useful for extracting only the information we are interested in from a large log file.
+`grep` is a very versatile tool for searching for text in one or more files. You can search for simple strings, or use regular expressions for more powerful searching. It's useful for extracting only the information we are interested in from a large log file. `grep` is short for global regular expression print (`g/re/p`).
 
 By default, `grep` will print out all lines that match the search expression.
 
@@ -144,6 +144,7 @@ You can also pipe input into it from another command, if you want to filter out 
 * `--color` highlights the part of the line that matched
 * `-o` prints out only the part of the line that matched
 * `-v` prints out all lines that DO NOT match the search expression
+* `-i` (i for "ignore case") prints out all lines that match, ignoring case distinctions
 
 ### grep and tail -f
 
