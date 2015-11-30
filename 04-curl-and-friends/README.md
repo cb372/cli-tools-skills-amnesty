@@ -143,7 +143,7 @@ $ curl -X POST http://my-api.com/things -d @input.json
 
 ### Exercise
 
-Perform a search on the Guardian Content API using curl. The URL is `http://content.guardianapis.com`. You will need to pass a URL parameter with the name `api-key` and the value `test`. CAPI should respond with a load of JSON.
+Perform a search on the Guardian Content API using curl. The URL is `http://content.guardianapis.com/search`. You will need to pass a URL parameter with the name `api-key` and the value `test`. CAPI should respond with a load of JSON.
 
 ## jq
 
