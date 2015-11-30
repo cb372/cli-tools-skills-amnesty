@@ -149,7 +149,7 @@ Perform a search on the Guardian Content API using curl. The URL is `http://cont
 
 `jq` is a tool for viewing, filtering and transforming JSON. If you work with JSON a lot, it's a lifesaver.
 
-It can be installed with Homebrew: `$ brew install jq`.
+It can be installed with Homebrew: `brew install jq`.
 
 The manual is excellent: [https://stedolan.github.io/jq/manual/](https://stedolan.github.io/jq/manual/)
 
@@ -271,4 +271,70 @@ $ curl -s 'http://content.guardianapis.com/search?api-key=test&format=xml' | xml
 
 This is super-special bonus content that has nothing to do with `wget`, `curl` or `jq`.
 
-TODO
+`tmux` (short for "terminal multiplexer") lets you run multiple shells at the same time, arrange them into windows and panes, resize them, jump between them, etc.
+
+To install on OS X, use Homebrew: `brew install tmux`. To run, simply type `tmux`.
+
+`tmux` reads its config from `~/.tmux.conf`. I'll go through my `.tmux.conf`, explaining `tmux`'s features as I go.
+
+```
+$ cat ~/.tmux.conf
+# Bind C-a, like screen
+set -g prefix C-a
+unbind C-b
+bind C-a send-prefix
+
+unbind %
+bind \ split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+bind k select-pane -U
+bind j select-pane -D
+bind h select-pane -L
+bind l select-pane -R
+bind v last-window
+
+# Arrow keys for resizing panes
+bind -r Left resize-pane -L
+bind -r Right resize-pane -R
+bind -r Up resize-pane -U
+bind -r Down resize-pane -D
+
+# To move a window to a new pane in this window
+bind @ command-prompt -p "create pane from:"  "join-pane -s ':%%'"
+
+# Sane scrolling
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+set-window-option -g mode-mouse on
+
+# Use ZSH as shell
+set-option -g default-shell /usr/local/bin/zsh
+
+# Enable copy-paste
+set-option -g default-command "reattach-to-user-namespace -l zsh"
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# Setup 'v' to begin selection as in Vim
+bind -t vi-copy v begin-selection
+bind -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+
+# Update default binding of `Enter` to also use copy-pipe
+unbind -t vi-copy Enter
+bind -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+
+# List of plugins
+# Supports `github_username/repo` or full git URLs
+set -g @tpm_plugins "              \
+  tmux-plugins/tpm                 \
+  tmux-plugins/tmux-resurrect      \
+"
+# Other examples:
+# github_username/plugin_name    \
+# git@github.com/user/plugin     \
+# git@bitbucket.com/user/plugin  \
+
+# initializes TMUX plugin manager
+run-shell ~/.tmux/plugins/tpm/tpm
+```
