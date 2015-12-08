@@ -96,6 +96,10 @@ I use Pathogen as a plugin manager, but apparently Vundle is what the cool kids 
 
 Open `christmas.txt` and write a Christmas story!
 
+## Configuring Vim
+
+You can configure Vim using the file `~/.vimrc`. I've put a copy of my `.vimrc` into this folder for reference.
+
 ## Further reading
 
 For a glimpse of some other powerful Vim features, and an explanation of how the key bindings are not random and there is a logic behind them, see this excellent StackOverflow answer: http://stackoverflow.com/a/1220118/110856
