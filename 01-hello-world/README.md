@@ -182,7 +182,7 @@ $ sudo chown nobody hello.txt
 You can use `chgrp` ("CHange GRouP") to change the owner group:
 
 ```
-$ sudo chown wheel hello.txt
+$ sudo chgrp wheel hello.txt
 ```
 
 Or you can use `chown` to change both at the same time:
