@@ -128,7 +128,7 @@ If you want to do more complex parsing of options and arguments, google for "get
 If your script takes an optional argument, you can provide a default value as follows:
 
 ```
-output_file=${1:output.txt}
+output_file=${1:-output.txt}
 ```
 
 This will use the first argument supplied to the script, if it exists. Otherwise it will use the value `output.txt`.
